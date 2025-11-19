@@ -94,6 +94,19 @@ export function Navbar() {
                                 </button>
                             ))}
                         </div>
+                        {userRole === 'LANDLORD' ? (
+                            <Link href="/landlord/assessment">
+                                <Button size="sm" variant="default">
+                                    New Project
+                                </Button>
+                            </Link>
+                        ) : userRole === 'PROVIDER' ? (
+                            <Link href="/provider/dashboard">
+                                <Button size="sm" variant="default">
+                                    View Dashboard
+                                </Button>
+                            </Link>
+                        ) : null}
                         <Button size="sm" onClick={isAuthenticated ? logout : login}>
                             {isAuthenticated ? 'Log Out' : 'Sign In'}
                         </Button>
@@ -149,6 +162,19 @@ export function Navbar() {
                                 ))}
                             </div>
                             <div className="px-4">
+                                {userRole === 'LANDLORD' ? (
+                                    <Link href="/landlord/assessment" className="block mb-3">
+                                        <Button className="w-full">
+                                            New Project
+                                        </Button>
+                                    </Link>
+                                ) : userRole === 'PROVIDER' ? (
+                                    <Link href="/provider/dashboard" className="block mb-3">
+                                        <Button className="w-full">
+                                            View Dashboard
+                                        </Button>
+                                    </Link>
+                                ) : null}
                                 <Button className="w-full" onClick={() => {
                                     isAuthenticated ? logout() : login();
                                     setIsMenuOpen(false);

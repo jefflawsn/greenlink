@@ -6,8 +6,11 @@ import { ArrowRight, CheckCircle2, Home, LineChart, Users, Zap, Leaf, ShieldChec
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { DashboardPreview } from "@/components/home/DashboardPreview";
+import { useAppStore } from "@/lib/store";
 
 export default function HomePage() {
+  const { userRole, isAuthenticated } = useAppStore();
+  
   // Animation variants
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -67,16 +70,41 @@ export default function HomePage() {
             </motion.p>
 
             <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
-              <Link href="/landlord/assessment">
-                <Button size="lg" variant="default" className="gap-2 h-14 px-8 text-lg w-full sm:w-auto">
-                  Start Assessment <ArrowRight className="h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/provider/profile">
-                <Button size="lg" variant="outline" className="gap-2 h-14 px-8 text-lg w-full sm:w-auto bg-white/50 hover:bg-white">
-                  For Installers
-                </Button>
-              </Link>
+              {userRole === 'PROVIDER' ? (
+                isAuthenticated ? (
+                  <>
+                    <Link href="/provider/dashboard">
+                      <Button size="lg" variant="default" className="gap-2 h-14 px-8 text-lg w-full sm:w-auto">
+                        View Dashboard <ArrowRight className="h-5 w-5" />
+                      </Button>
+                    </Link>
+                    <Link href="/provider/profile">
+                      <Button size="lg" variant="outline" className="gap-2 h-14 px-8 text-lg w-full sm:w-auto bg-white/50 hover:bg-white">
+                        My Profile
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <Link href="/provider/profile">
+                    <Button size="lg" variant="default" className="gap-2 h-14 px-8 text-lg w-full sm:w-auto">
+                      Create an Account <ArrowRight className="h-5 w-5" />
+                    </Button>
+                  </Link>
+                )
+              ) : (
+                <>
+                  <Link href="/landlord/assessment">
+                    <Button size="lg" variant="default" className="gap-2 h-14 px-8 text-lg w-full sm:w-auto">
+                      Start Assessment <ArrowRight className="h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/provider/profile">
+                    <Button size="lg" variant="outline" className="gap-2 h-14 px-8 text-lg w-full sm:w-auto bg-white/50 hover:bg-white">
+                      For Installers
+                    </Button>
+                  </Link>
+                </>
+              )}
             </motion.div>
 
             <motion.div variants={fadeIn} className="mt-12 flex flex-wrap justify-center gap-8 text-sm text-muted-foreground mb-16">

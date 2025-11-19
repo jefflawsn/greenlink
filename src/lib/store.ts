@@ -16,12 +16,21 @@ interface AppState {
     setSelectedProviderId: (id: string | null) => void;
 }
 
-export const useAppStore = create<AppState>((set) => ({
+export const useAppStore = create<AppState>((set, get) => ({
     userRole: 'GUEST',
     isAuthenticated: false,
     setUserRole: (role) => set({ userRole: role }),
-    login: () => set({ isAuthenticated: true, userRole: 'LANDLORD' }), // Default login as Landlord
-    logout: () => set({ isAuthenticated: false, userRole: 'GUEST' }),
+    login: () => {
+        const currentRole = get().userRole;
+        // Preserve current role if it's LANDLORD or PROVIDER, otherwise default to LANDLORD
+        const newRole = currentRole === 'GUEST' ? 'LANDLORD' : currentRole;
+        set({ isAuthenticated: true, userRole: newRole });
+    },
+    logout: () => {
+        const currentRole = get().userRole;
+        // Preserve role on logout (don't reset to GUEST)
+        set({ isAuthenticated: false, userRole: currentRole });
+    },
     assessmentData: {},
     setAssessmentData: (data) => set((state) => ({ assessmentData: { ...state.assessmentData, ...data } })),
     selectedProviderId: null,
