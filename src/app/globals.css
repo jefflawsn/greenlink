@@ -4,61 +4,69 @@
 
 @layer base {
   :root {
-    /* Apple/Notion inspired palette */
-    --background: 0 0% 99%;
-    /* Slightly off-white for warmth */
-    --foreground: 240 10% 3.9%;
+    /* Nature Tech Palette - Light Mode Default */
+    --background: 40 20% 98%; /* Warm Cream #FAF9F6 */
+    --foreground: 150 40% 10%; /* Very dark green almost black */
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 150 40% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 150 40% 10%;
 
-    /* Sophisticated Green */
-    --primary: 142 72% 29%;
-    --primary-foreground: 0 0% 100%;
+    /* Deep Forest Green */
+    --primary: 155 40% 15%; 
+    --primary-foreground: 75 85% 57%; /* Lime text on dark green */
 
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 240 5.9% 10%;
+    /* Sage/Mist */
+    --secondary: 140 20% 94%; 
+    --secondary-foreground: 155 40% 15%;
 
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
+    --muted: 40 10% 94%;
+    --muted-foreground: 150 10% 45%;
 
-    --accent: 240 5% 96%;
-    --accent-foreground: 240 5.9% 10%;
+    /* Electric Lime for Accents */
+    --accent: 75 85% 57%;
+    --accent-foreground: 155 40% 15%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
-    --ring: 142 72% 29%;
+    --border: 150 10% 90%;
+    --input: 150 10% 90%;
+    --ring: 155 40% 15%;
 
-    --radius: 0.75rem;
-    /* More rounded corners */
+    --radius: 1rem; /* 16px for modern smooth corners */
   }
 
   .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 0 0% 95%;
-    --card: 24 9.8% 10%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 142 70% 50%;
-    --primary-foreground: 144.9 80.4% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 0 0% 98%;
+    --background: 155 40% 5%; /* Ultra dark green */
+    --foreground: 40 20% 96%;
+
+    --card: 155 40% 8%;
+    --card-foreground: 40 20% 96%;
+
+    --popover: 155 40% 8%;
+    --popover-foreground: 40 20% 96%;
+
+    --primary: 75 85% 57%; /* Lime becomes primary in dark mode */
+    --primary-foreground: 155 40% 10%;
+
+    --secondary: 155 30% 15%;
+    --secondary-foreground: 40 20% 96%;
+
+    --muted: 155 30% 15%;
+    --muted-foreground: 150 10% 60%;
+
+    --accent: 155 30% 20%;
+    --accent-foreground: 75 85% 57%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 142 70% 50%;
+
+    --border: 155 30% 15%;
+    --input: 155 30% 15%;
+    --ring: 75 85% 57%;
   }
 }
 
@@ -72,27 +80,31 @@
     color: hsl(var(--foreground));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "ss03", "cv01"; /* More geometric Inter */
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+    font-weight: 600;
   }
 }
 
 @layer utilities {
-  .glass {
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  }
-
-  .glass-dark {
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  }
-
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  }
+
+  .dark .glass-panel {
+    background: rgba(10, 33, 15, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   }
 }
