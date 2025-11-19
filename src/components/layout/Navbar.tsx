@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 
 export function Navbar() {
     const pathname = usePathname();
-    const { userRole, setUserRole } = useAppStore();
+    const { userRole, setUserRole, isAuthenticated, login, logout } = useAppStore();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -79,7 +79,7 @@ export function Navbar() {
                     {/* Role Switcher & Auth (Mock) */}
                     <div className="hidden md:flex items-center space-x-4">
                         <div className="flex items-center space-x-1 bg-secondary/50 p-1 rounded-full border border-secondary">
-                            {(['GUEST', 'LANDLORD', 'PROVIDER'] as UserRole[]).map((role) => (
+                            {(['LANDLORD', 'PROVIDER'] as UserRole[]).map((role) => (
                                 <button
                                     key={role}
                                     onClick={() => setUserRole(role)}
@@ -94,7 +94,9 @@ export function Navbar() {
                                 </button>
                             ))}
                         </div>
-                        <Button size="sm">Sign In</Button>
+                        <Button size="sm" onClick={isAuthenticated ? logout : login}>
+                            {isAuthenticated ? 'Log Out' : 'Sign In'}
+                        </Button>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -130,8 +132,8 @@ export function Navbar() {
                         ))}
                         <div className="pt-4 border-t border-border mt-4">
                             <p className="px-4 text-xs font-medium text-muted-foreground mb-3">Switch View</p>
-                            <div className="flex space-x-2 px-4">
-                                {(['GUEST', 'LANDLORD', 'PROVIDER'] as UserRole[]).map((role) => (
+                            <div className="flex space-x-2 px-4 mb-4">
+                                {(['LANDLORD', 'PROVIDER'] as UserRole[]).map((role) => (
                                     <button
                                         key={role}
                                         onClick={() => setUserRole(role)}
@@ -145,6 +147,14 @@ export function Navbar() {
                                         {role}
                                     </button>
                                 ))}
+                            </div>
+                            <div className="px-4">
+                                <Button className="w-full" onClick={() => {
+                                    isAuthenticated ? logout() : login();
+                                    setIsMenuOpen(false);
+                                }}>
+                                    {isAuthenticated ? 'Log Out' : 'Sign In'}
+                                </Button>
                             </div>
                         </div>
                     </div>
