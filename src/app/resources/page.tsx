@@ -4,73 +4,53 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
-import { BadgeCheck, BookOpen, ChevronRight, FileText, Lightbulb, Search, Zap, Filter, ArrowRight } from "lucide-react";
+import { BadgeCheck, BookOpen, FileText, Lightbulb, Search, Zap, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { ARTICLES } from "@/lib/articles"; // Import shared data
 
-// Mock Data
-const allArticles = [
+// Define missing mock articles locally if needed to fill the grid, or rely on ARTICLES
+// For now, let's combine ARTICLES with some placeholders to keep the grid full as in the original mock
+const placeholderArticles = [
     {
-        id: 1,
-        title: "Understanding EPC Ratings: A Landlord's Guide",
-        desc: "Everything you need to know about Energy Performance Certificates and how to improve your rating to meet 2025 standards.",
-        category: "Guides",
-        readTime: "5 min read",
-        image: "bg-blue-50",
-        icon: FileText,
-        color: "text-blue-600"
-    },
-    {
-        id: 2,
+        id: "4",
+        slug: "green-grants-future",
         title: "The Future of Green Grants in the UK",
         desc: "An overview of upcoming government funding for energy efficiency improvements. Don't miss out on the Boiler Upgrade Scheme.",
         category: "Grants",
         readTime: "4 min read",
+        date: "Nov 15, 2024",
         image: "bg-green-50",
         icon: Zap,
         color: "text-green-600"
     },
     {
-        id: 3,
+        id: "5",
+        slug: "heat-pumps-vs-boilers",
         title: "Heat Pumps vs. Gas Boilers",
         desc: "A detailed cost-benefit analysis to help you decide which heating system is right for your rental property investment.",
         category: "Guides",
         readTime: "7 min read",
+        date: "Nov 10, 2024",
         image: "bg-orange-50",
         icon: Lightbulb,
         color: "text-orange-600"
     },
     {
-        id: 4,
-        title: "New Rental Regulations Explained",
-        desc: "What the new 'Minimum Energy Efficiency Standards' (MEES) mean for your portfolio and how to stay compliant.",
-        category: "Regulations",
-        readTime: "6 min read",
-        image: "bg-purple-50",
-        icon: BadgeCheck,
-        color: "text-purple-600"
-    },
-    {
-        id: 5,
-        title: "Case Study: Victorian Terrace Retrofit",
-        desc: "How one landlord improved their property from EPC E to B using external wall insulation and solar panels.",
-        category: "Case Studies",
-        readTime: "8 min read",
-        image: "bg-teal-50",
-        icon: BookOpen,
-        color: "text-teal-600"
-    },
-    {
-        id: 6,
+        id: "6",
+        slug: "solar-panels-roi",
         title: "Solar Panels: Are They Worth It?",
         desc: "Analyzing the ROI of solar PV systems for rental properties in the UK climate.",
         category: "Guides",
         readTime: "5 min read",
+        date: "Nov 05, 2024",
         image: "bg-yellow-50",
         icon: Lightbulb,
         color: "text-yellow-600"
     }
 ];
+
+const allArticles = [...ARTICLES, ...placeholderArticles];
 
 const categories = ["All", "Guides", "Regulations", "Grants", "Case Studies"];
 
@@ -190,7 +170,8 @@ export default function ResourcesPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         transition={{ duration: 0.2 }}
                                     >
-                                        <Link href="#" className="group block h-full">
+                                        {/* Dynamic Link: if slug exists use it, else placeholder link */}
+                                        <Link href={article.slug ? `/resources/${article.slug}` : "#"} className="group block h-full">
                                             <Card className="h-full border border-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden bg-white/50 backdrop-blur-sm">
                                                 <div className={`h-48 ${article.image} relative overflow-hidden`}>
                                                     <div className="absolute inset-0 flex items-center justify-center">
@@ -206,7 +187,7 @@ export default function ResourcesPage() {
                                                     <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
                                                         <span className="flex items-center gap-1"><BookOpen className="h-3 w-3" /> {article.readTime}</span>
                                                         <span>•</span>
-                                                        <span>Nov 19, 2024</span>
+                                                        <span>{article.date}</span>
                                                     </div>
                                                     <CardTitle className="text-xl group-hover:text-primary transition-colors line-clamp-2">
                                                         {article.title}

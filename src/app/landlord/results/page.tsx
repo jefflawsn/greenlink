@@ -110,7 +110,7 @@ export default function ResultsPage() {
                                     <Link href="/landlord/marketplace" className="w-full">
                                         <Button className="w-full mb-3">Find Installers</Button>
                                     </Link>
-                                    <Link href="/landlord/finance" className="w-full">
+                                    <Link href="/landlord/finance?auto=true" className="w-full">
                                         <Button variant="outline" className="w-full">Check Grants</Button>
                                     </Link>
                                 </div>
