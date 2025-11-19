@@ -28,44 +28,14 @@ export default function HomePage() {
       
       {/* Hero Section with Centered Layout */}
       <section className="relative pt-20 pb-20 md:pt-32 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full overflow-visible">
-        {/* Living Ecosystem Background */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
-          {/* Dot Grid Pattern - Subtle Tech Feel */}
-          <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.4] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_70%)]" />
-          
-          {/* Aurora Gradients - Breathing Life */}
-          <motion.div 
-            animate={{ 
-              scale: [1, 1.1, 1],
-              rotate: [0, 5, -5, 0],
-              opacity: [0.3, 0.5, 0.3] 
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-10%] left-[20%] w-[60vw] h-[60vw] bg-green-200/30 blur-[100px] rounded-full mix-blend-multiply"
-          />
-          
-          <motion.div 
-            animate={{ 
-              x: [0, 50, -50, 0],
-              y: [0, -30, 30, 0],
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[10%] right-[-10%] w-[50vw] h-[50vw] bg-lime-200/20 blur-[120px] rounded-full mix-blend-multiply"
-          />
-
-           <motion.div 
-            animate={{ 
-               scale: [1, 1.2, 1],
-               opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-[-20%] left-[-10%] w-[40vw] h-[40vw] bg-emerald-900/5 blur-[100px] rounded-full mix-blend-multiply"
-          />
+        {/* Living Ecosystem Background - Clean Dot Grid */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 select-none">
+          {/* Dot Grid Pattern */}
+          <div className="absolute inset-0 bg-[radial-gradient(#d1d5db_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-[0.6] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_80%)]" />
         </div>
 
-        {/* Subtle Grain Overlay on top */}
-        <div className="absolute inset-0 bg-noise opacity-[0.02] pointer-events-none mix-blend-overlay z-20" />
-
+        {/* Suppression du grain overlay qui pouvait griser l'image */}
+        
         <div className="flex flex-col items-center text-center max-w-5xl mx-auto relative z-10">
           <motion.div 
             className="flex flex-col items-center"
