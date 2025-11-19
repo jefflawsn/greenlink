@@ -4,12 +4,20 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { useAppStore } from '@/lib/store';
 import { PROVIDERS } from '@/lib/mock-data';
-import { Calendar, FileText, MessageSquare, PieChart, Plus, Settings } from 'lucide-react';
+import { Calendar, FileText, MessageSquare, PieChart, Plus, Settings, ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LandlordDashboard() {
     const { selectedProviderId } = useAppStore();
     const provider = PROVIDERS.find(p => p.id === selectedProviderId);
+
+    // Mock data for impact - Simulating a portfolio with some activity
+    const impactData = {
+        annualSavings: '£2,450',
+        co2Reduced: '5.8 Tons',
+        epcImprovement: 'D → B',
+        roi: '18.5%'
+    };
 
     return (
         <div className="min-h-screen bg-secondary/30 py-8 px-4 sm:px-6 lg:px-8">
@@ -136,24 +144,37 @@ export default function LandlordDashboard() {
 
                     {/* Sidebar - Stats */}
                     <div className="space-y-6">
-                        <Card>
+                        <Card className="bg-primary text-primary-foreground">
                             <CardHeader>
-                                <CardTitle>Total Impact</CardTitle>
-                                <CardDescription>Across all properties</CardDescription>
+                                <CardTitle className="text-primary-foreground">Total Impact</CardTitle>
+                                <CardDescription className="text-primary-foreground/80">Across all properties</CardDescription>
                             </CardHeader>
-                            <CardContent className="space-y-4">
+                            <CardContent className="space-y-6">
                                 <div>
-                                    <p className="text-sm text-muted-foreground">Est. Annual Savings</p>
-                                    <p className="text-2xl font-bold text-green-600">£0.00</p>
+                                    <div className="flex justify-between items-end mb-1">
+                                        <p className="text-sm text-primary-foreground/80">Est. Annual Savings</p>
+                                        <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded text-white flex items-center gap-1">
+                                            <ArrowUpRight className="h-3 w-3" /> 12%
+                                        </span>
+                                    </div>
+                                    <p className="text-4xl font-bold">{impactData.annualSavings}</p>
                                 </div>
-                                <div>
-                                    <p className="text-sm text-muted-foreground">CO₂ Reduced</p>
-                                    <p className="text-2xl font-bold">0 Tons</p>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <p className="text-sm text-primary-foreground/80 mb-1">CO₂ Reduced</p>
+                                        <p className="text-2xl font-bold">{impactData.co2Reduced}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-primary-foreground/80 mb-1">EPC Rating</p>
+                                        <p className="text-2xl font-bold">{impactData.epcImprovement}</p>
+                                    </div>
                                 </div>
-                                <div className="pt-4 border-t">
-                                    <Button variant="outline" className="w-full gap-2">
-                                        <PieChart className="h-4 w-4" /> View Analytics
-                                    </Button>
+                                <div className="pt-4 border-t border-white/20">
+                                    <Link href="/landlord/results">
+                                        <Button variant="secondary" className="w-full gap-2">
+                                            <PieChart className="h-4 w-4" /> View Analytics
+                                        </Button>
+                                    </Link>
                                 </div>
                             </CardContent>
                         </Card>
@@ -171,6 +192,15 @@ export default function LandlordDashboard() {
                                         <div>
                                             <p className="text-sm font-medium">Site Visit</p>
                                             <p className="text-xs text-muted-foreground">Nov 24, 10:00 AM</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <div className="bg-orange-100 p-2 rounded">
+                                            <FileText className="h-4 w-4 text-orange-600" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium">Grant Deadline</p>
+                                            <p className="text-xs text-muted-foreground">Dec 01, 5:00 PM</p>
                                         </div>
                                     </div>
                                 </div>
