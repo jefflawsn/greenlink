@@ -22,10 +22,13 @@ export function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const navLinks = [
-        { href: '/', label: 'Home' },
-        { href: '/resources', label: 'Resources' },
-    ];
+    const navLinks =
+        userRole === 'PROVIDER'
+            ? [{ href: '/', label: 'Home' }]
+            : [
+                  { href: '/', label: 'Home' },
+                  { href: '/resources', label: 'Resources' },
+              ];
 
     const landlordLinks = [
         { href: '/landlord/dashboard', label: 'Dashboard' },
