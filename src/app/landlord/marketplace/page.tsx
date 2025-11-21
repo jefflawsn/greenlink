@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -10,20 +10,44 @@ import { Search, Star, MapPin, ShieldCheck, Filter } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+const ISSUE_SERVICE_MAP: Record<string, string[]> = {
+    'Damp or Mold': ['Damp Proofing', 'Ventilation'],
+    'Drafty Windows': ['Windows', 'Doors'],
+    'High Energy Bills': ['Insulation', 'Solar', 'Heat Pumps'],
+    'Cold Rooms': ['Insulation', 'Heating'],
+    'Noise Pollution': ['Windows'],
+    'Old Boiler': ['Heat Pumps', 'Heating'],
+};
+
 export default function MarketplacePage() {
     const router = useRouter();
-    const { setSelectedProviderId } = useAppStore();
+    const { setSelectedProviderId, assessmentData } = useAppStore();
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedService, setSelectedService] = useState<string | null>(null);
+
+    const requestedServices = useMemo(() => {
+        const set = new Set<string>();
+        const issues = assessmentData?.issues || [];
+        issues.forEach((issue: string) => {
+            (ISSUE_SERVICE_MAP[issue] || ['Insulation']).forEach(service => set.add(service));
+        });
+        return Array.from(set);
+    }, [assessmentData]);
+
+    const [selectedService, setSelectedService] = useState<string | null>(requestedServices[0] || null);
 
     const filteredProviders = PROVIDERS.filter(provider => {
         const matchesSearch = provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             provider.description.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesAssessment = requestedServices.length === 0
+            ? true
+            : provider.services.some(service => requestedServices.includes(service));
         const matchesService = selectedService ? provider.services.includes(selectedService) : true;
-        return matchesSearch && matchesService;
+        return matchesSearch && matchesService && matchesAssessment;
     });
 
-    const allServices = Array.from(new Set(PROVIDERS.flatMap(p => p.services)));
+    const allServices = (requestedServices.length
+        ? requestedServices
+        : Array.from(new Set(PROVIDERS.flatMap(p => p.services))));
 
     const handleSelectProvider = (id: string) => {
         setSelectedProviderId(id);
