@@ -95,7 +95,7 @@ export default function MarketplacePage() {
                                     </div>
                                     <div className="flex items-center bg-yellow-50 px-2 py-1 rounded text-yellow-700 text-xs font-bold">
                                         <Star className="h-3 w-3 mr-1 fill-yellow-500 text-yellow-500" />
-                                        {provider.rating} ({provider.reviews})
+                                        {provider.rating ?? 'N/A'} ({provider.reviews ?? 'N/A'})
                                     </div>
                                 </div>
                                 <div className="flex items-center text-muted-foreground text-sm mb-2">
